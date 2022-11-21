@@ -64,11 +64,12 @@ void td_esc_lthree_tap(qk_tap_dance_state_t *state, void *user_data)
 void td_esc_lthree_finished(qk_tap_dance_state_t *state, void *user_data)
 {
 esctap_state.state = cur_dance(state);
+  esctap_state.state = cur_dance(state);
   switch (esctap_state.state) {
-    case SINGLE_TAP: register_code(KC_ESC); break;
-    //case SINGLE_HOLD: register_code(KC_LALT); break;
+    case SINGLE_TAP: register_code(KC_ESC); break; //set_oneshot_layer(1, ONESHOT_START); clear_oneshot_layer_state(ONESHOT_PRESSED);
+    case SINGLE_HOLD: break; //register_code(KC_LALT);
     case DOUBLE_TAP: set_oneshot_layer(3, ONESHOT_START); set_oneshot_layer(3, ONESHOT_PRESSED); break;
-    //case DOUBLE_HOLD: register_code(KC_LALT); layer_on(1); break;
+    case DOUBLE_HOLD: break; //register_code(KC_LALT); layer_on(1);
     //Last case is for fast typing. Assuming your key is `f`:
     //For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
     //In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
@@ -79,9 +80,9 @@ void td_esc_lthree_reset(qk_tap_dance_state_t *state, void *user_data)
 {
   switch (esctap_state.state) {
     case SINGLE_TAP: unregister_code(KC_ESC); break;
-    //case SINGLE_HOLD: unregister_code(KC_LALT); break;
-    case DOUBLE_TAP: break;
-    //case DOUBLE_HOLD: layer_off(1); unregister_code(KC_LALT); break;
+    case SINGLE_HOLD: break; //unregister_code(KC_LALT);
+    case DOUBLE_TAP: set_oneshot_layer(3, ONESHOT_START); clear_oneshot_layer_state(ONESHOT_PRESSED); break;
+    case DOUBLE_HOLD: break; //layer_off(1); unregister_code(KC_LALT); break;
   }
   esctap_state.state = 0;
 }
