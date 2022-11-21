@@ -15,6 +15,9 @@
  */
 
 #include QMK_KEYBOARD_H
+#ifdef CONSOLE_ENABLE
+    #include "print.h"
+#endif
 
 enum {
   SINGLE_TAP = 1,
@@ -68,7 +71,7 @@ esctap_state.state = cur_dance(state);
   switch (esctap_state.state) {
     case SINGLE_TAP: register_code(KC_ESC); break; //set_oneshot_layer(1, ONESHOT_START); clear_oneshot_layer_state(ONESHOT_PRESSED);
     case SINGLE_HOLD: break; //register_code(KC_LALT);
-    case DOUBLE_TAP: set_oneshot_layer(3, ONESHOT_START); set_oneshot_layer(3, ONESHOT_PRESSED); break;
+    case DOUBLE_TAP: uprint("set"); set_oneshot_layer(3, ONESHOT_START); break;
     case DOUBLE_HOLD: break; //register_code(KC_LALT); layer_on(1);
     //Last case is for fast typing. Assuming your key is `f`:
     //For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
@@ -81,7 +84,7 @@ void td_esc_lthree_reset(qk_tap_dance_state_t *state, void *user_data)
   switch (esctap_state.state) {
     case SINGLE_TAP: unregister_code(KC_ESC); break;
     case SINGLE_HOLD: break; //unregister_code(KC_LALT);
-    case DOUBLE_TAP: set_oneshot_layer(3, ONESHOT_START); clear_oneshot_layer_state(ONESHOT_PRESSED); break;
+    case DOUBLE_TAP: uprint("reset"); clear_oneshot_layer_state(ONESHOT_PRESSED); break;
     case DOUBLE_HOLD: break; //layer_off(1); unregister_code(KC_LALT); break;
   }
   esctap_state.state = 0;
