@@ -24,7 +24,7 @@ enum {
 void td_esc_lthree_finished(qk_tap_dance_state_t *state, void *user_data)
 {
     if (state->count == 1) {
-        layer_on(4);
+        layer_on(3);
     } else {
         register_code(KC_ESC);
     }
@@ -33,7 +33,7 @@ void td_esc_lthree_finished(qk_tap_dance_state_t *state, void *user_data)
 void td_esc_lthree_reset(qk_tap_dance_state_t *state, void *user_data)
 {
     if (state->count == 1) {
-        layer_off(4);
+        layer_off(3);
     } else {
         unregister_code(KC_ESC);
     }
@@ -41,6 +41,7 @@ void td_esc_lthree_reset(qk_tap_dance_state_t *state, void *user_data)
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_ESC_LTHREE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_esc_lthree_finished, td_esc_lthree_reset),
+    //[TD_ESC_LTHREE] = ACTION_TAP_DANCE_DUAL_ROLE(KC_ESC, 3),
 };
 
 // clang-format off
