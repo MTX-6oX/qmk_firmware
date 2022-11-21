@@ -16,12 +16,12 @@ static HSV SOLID_REACTIVE_NEXUS_math(HSV hsv, int16_t dx, int16_t dy, uint8_t di
     uint16_t nexusHue = 127;
     if (effect > 255) effect = 255;
     if (dist > 72) effect = 255;
-    if(effect!=255) dprintf("%u\n", effect);
+    //if(effect!=255) dprintf("%u\n", effect);
     if ((dx > 8 || dx < -8) && (dy > 8 || dy < -8)) effect = 255;
 #            ifdef RGB_MATRIX_SOLID_REACTIVE_GRADIENT_MODE
     hsv.h = scale16by8(g_rgb_timer, add8(rgb_matrix_config.speed, 1) >> 6);
 #            endif
-    hsv.v = qadd8(hsv.v, 255 - effect);
+    hsv.v = qsub8(hsv.v, scale8(69,255 - effect)); //STOMP effect
     //hsv.h = qsub8(hsv.h, (255 - effect)/2);
     if(hsv.h>nexusHue) {
         hsv.h = qsub8(hsv.h, scale8((hsv.h-nexusHue),255-effect));
