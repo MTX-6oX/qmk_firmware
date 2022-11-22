@@ -1,0 +1,10 @@
+---
+kind: pipeline
+name: default
+
+steps:
+- name: try1
+  image: qmkfm/base_container
+  commands:
+  #- ./configure
+  - make keychron/k8_pro/ansi/rgb:via
